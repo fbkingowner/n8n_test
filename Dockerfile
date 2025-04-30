@@ -19,7 +19,7 @@ RUN apk add --no-cache \
     bash
 
 # Устанавливаем глобально puppeteer и node-html-to-image
-RUN npm install -g puppeteer@22.8.2 node-html-to-image
+RUN npm install -g puppeteer@24.7.2 node-html-to-image
 
 # Устанавливаем кастомный нод n8n-nodes-html2image
 RUN cd /usr/local/lib/node_modules/n8n && \
