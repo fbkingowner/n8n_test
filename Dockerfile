@@ -19,11 +19,11 @@ RUN apk add --no-cache \
     bash
 
 # Устанавливаем глобально puppeteer и node-html-to-image
-RUN npm install -g puppeteer@24.7.2 node-html-to-image
+#RUN npm install -g puppeteer@24.7.2 node-html-to-image
 
 # Устанавливаем кастомный нод n8n-nodes-html2image
-RUN cd /usr/local/lib/node_modules/n8n && \
-    npm install git+https://github.com/siduko/n8n-nodes-html2image.git#main
+#RUN cd /usr/local/lib/node_modules/n8n && \
+#    npm install git+https://github.com/siduko/n8n-nodes-html2image.git#main
 
 # Указываем puppeteer путь к chromium
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
