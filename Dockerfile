@@ -13,11 +13,15 @@ RUN apk add --no-cache \
   nodejs \
   npm \
   ffmpeg \
-  curl
+  curl \
+  git
 
-# Устанавливаем node-html-to-image
+# Устанавливаем node-html-to-image глобально (по желанию)
 RUN npm install -g node-html-to-image
-RUN npm install --save html-to-image
+
+# Устанавливаем кастомную ноду html2image ВНУТРЬ n8n
+RUN cd /usr/local/lib/node_modules/n8n && \
+  npm install git+https://github.com/siduko/n8n-nodes-html2image.git#main
 
 # Указываем Puppeteer, где искать браузер
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
