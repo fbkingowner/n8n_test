@@ -1,30 +1,33 @@
 FROM docker.n8n.io/n8nio/n8n:latest
 
+# Переключаемся на root для установки зависимостей
 USER root
 
-# Устанавливаем зависимости для Puppeteer
+# Устанавливаем необходимые пакеты для puppeteer
 RUN apk add --no-cache \
-  chromium \
-  nss \
-  freetype \
-  harfbuzz \
-  ca-certificates \
-  ttf-freefont \
-  nodejs \
-  npm \
-  ffmpeg \
-  curl \
-  git
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    nodejs \
+    npm \
+    ffmpeg \
+    curl \
+    udev \
+    bash
 
-# Устанавливаем node-html-to-image глобально (по желанию)
-RUN npm install -g node-html-to-image
+# Устанавливаем глобально puppeteer и node-html-to-image
+RUN npm install -g puppeteer@22.8.2 node-html-to-image
 
-# Устанавливаем кастомную ноду html2image ВНУТРЬ n8n
+# Устанавливаем кастомный нод n8n-nodes-html2image
 RUN cd /usr/local/lib/node_modules/n8n && \
-  npm install git+https://github.com/siduko/n8n-nodes-html2image.git#main
+    npm install git+https://github.com/siduko/n8n-nodes-html2image.git#main
 
-# Указываем Puppeteer, где искать браузер
+# Указываем puppeteer путь к chromium
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
+# Устанавливаем права обратно пользователю node
 RUN chown -R node:node /home/node/.n8n
 USER node
