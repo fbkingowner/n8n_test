@@ -26,7 +26,7 @@ RUN npm install -g puppeteer@24.7.2 node-html-to-image
 #    npm install git+https://github.com/siduko/n8n-nodes-html2image.git#main
 
 # Указываем puppeteer путь к chromium
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Устанавливаем права обратно пользователю node
 RUN chown -R node:node /home/node/.n8n
