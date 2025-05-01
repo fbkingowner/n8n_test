@@ -1,30 +1,39 @@
-FROM docker.n8n.io/n8nio/n8n:latest
+FROM node:20-slim
 
-USER root
-
-# Устанавливаем необходимые библиотеки для Chromium
-RUN apk add --no-cache \
+# Установка зависимостей
+RUN apt-get update && apt-get install -y \
     chromium \
-    nss \
-    freetype \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
-    udev \
+    fonts-liberation \
+    libappindicator3-1 \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libdbus-1-3 \
+    libdrm2 \
+    libgbm1 \
+    libnspr4 \
+    libnss3 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    xdg-utils \
+    wget \
+    curl \
+    ffmpeg \
     bash \
-    nodejs \
-    npm \
-    dumb-init \
-    && rm -rf /var/cache/apk/*
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем puppeteer с нужной версией Chromium
-ENV PUPPETEER_SKIP_DOWNLOAD=true
-RUN npm install -g puppeteer@24.7.2 node-html-to-image
+# Устанавливаем n8n и нужные пакеты
+RUN npm install -g n8n puppeteer@24.7.2 node-html-to-image
 
-# Указываем путь к Chromium
+# Указываем путь до Chromium
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-# Назначаем права пользователю node
-RUN chown -R node:node /home/node/.n8n
+# Открываем порт
+EXPOSE 5678
 
-USER node
+# Запуск n8n
+CMD ["n8n"]
