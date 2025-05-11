@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Устанавливаем n8n и нужные пакеты
-RUN npm install -g n8n puppeteer@24.7.2 node-html-to-image
+RUN npm install -g n8n puppeteer@24.7.2
 
 # Указываем путь до Chromium
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
